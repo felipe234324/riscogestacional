@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2A5B7F;
+      --secondary: #3B82F6;
+      --accent: #E6F0FA;
+      --light: #F5F7F9;
+      --white: #ffffff;
+      --text: #333333;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+      --sus-blue: #3B82F6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--white) 100%);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .sus-logos {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .sus-logo {
+      position: absolute;
+      bottom: -100px;
+      opacity: 0.3;
+      animation: rise 15s infinite ease-in;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+
+    .sus-logo:nth-child(1) {
+      width: 70px;
+      height: 42px;
+      left: 10%;
+      animation-duration: 8s;
+      background-image: url("{{ url_for('static', filename='imagens/logo-sus.png') }}");
+    }
+
+    .sus-logo:nth-child(2) {
+      width: 56px;
+      height: 34px;
+      left: 20%;
+      animation-duration: 5s;
+      animation-delay: 1s;
+      background-image: url("{{ url_for('static', filename='imagens/logo-sus.png') }}");
+    }
+
+    .sus-logo:nth-child(3) {
+      width: 84px;
+      height: 50px;
+      left: 35%;
+      animation-duration: 7s;
+      animation-delay: 2s;
+      background-image: url("{{ url_for('static', filename='imagens/logo-sus.png') }}");
+    }
+
+    .sus-logo:nth-child(4) {
+      width: 98px;
+      height: 59px;
+      left: 50%;
+      animation-duration: 11s;
+      animation-delay: 0s;
+      background-image: url("{{ url_for('static', filename='imagens/logo-sus.png') }}");
+    }
+
+    .sus-logo:nth-child(5) {
+      width: 63px;
+      height: 38px;
+      left: 55%;
+      animation-duration: 6s;
+      animation-delay: 1s;
+      background-image: url("{{ url_for('static', filename='imagens/logo-sus.png') }}");
+    }
+
+    .sus-logo:nth-child(6) {
+      width: 77px;
+      height: 46px;
+      left: 65%;
+      animation-duration: 8s;
+      animation-delay: 3s;
+      background-image: url("{{ url_for('static', filename='imagens/logo-sus.png') }}");
+    }
+
+    .sus-logo:nth-child(7) {
+      width: 60px;
+      height: 36px;
+      left: 75%;
+      animation-duration: 7s;
+      animation-delay: 2s;
+      background-image: url("{{ url_for('static', filename='imagens/logo-sus.png') }}");
+    }
+
+    .sus-logo:nth-child(8) {
+      width: 91px;
+      height: 55px;
+      left: 80%;
+      animation-duration: 6s;
+      animation-delay: 1s;
+      background-image: url("{{ url_for('static', filename='imagens/logo-sus.png') }}");
+    }
+
+    @keyframes rise {
+      0% {
+        bottom: -100px;
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(100px);
+      }
+      100% {
+        bottom: 1080px;
+        transform: translateX(-200px);
+      }
+    }
+
+    .left-panel {
+      flex: 1;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .barra-links-container {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .lista-links {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .link-item {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .link-barra {
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .link-item:hover .link-barra {
+      color: var(--secondary);
+      text-decoration: underline;
+    }
+
+    .link-item:hover ~ .link-item .link-barra {
+      opacity: 0.5;
+      color: var(--secondary);
+    }
+
+    .espacador {
+      width: 10px;
+      height: 20px;
+      border-right: 1px solid var(--secondary);
+      margin: 0 10px;
+    }
+
+    .link-barra .tooltip {
+      visibility: hidden;
+      background-color: var(--primary);
+      color: var(--white);
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 10px;
+      position: absolute;
+      z-index: 1;
+      top: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.85rem;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .link-barra:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    .logo-icon {
+      width: 200px;
+      height: 200px;
+      margin-bottom: 0px;
+      object-fit: contain;
+    }
+
+    .logo-text h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.2;
+      margin-bottom: 5px;
+      text-align: left;
+    }
+
+    .logo-text p {
+      font-size: 1rem;
+      color: var(--secondary);
+      font-weight: 400;
+    }
+
+    .features {
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(42, 91, 127, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      color: var(--primary);
+    }
+
+    .feature-text h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 3px;
+      line-height: 1.2;
+    }
+
+    .feature-text p {
+      font-size: 0.8rem;
+      color: var(--secondary);
+      line-height: 1.2;
+    }
+
+    .right-panel {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .auth-container {
+      background-color: var(--white);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 450px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .auth-header h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-header svg {
+      width: 28px;
+      height: 28px;
+      margin-right: 10px;
+    }
+
+    .auth-header p {
+      color: var(--secondary);
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      background-color: var(--light);
+    }
+
+    .form-control:focus {
+      border-color: var(--secondary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      background-color: var(--white);
+    }
+
+    .btn-container {
+      position: relative;
+      width: 100%;
+      height: 50px;
+      perspective: 1000px;
+      margin-top: 10px;
+    }
+
+    .btn-entrar {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: var(--primary);
+      color: var(--accent);
+      border: none;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      box-shadow: 0 10px 30px rgba(42, 91, 127, 0.3);
+      transform-style: preserve-3d;
+      z-index: 1;
+    }
+
+    .btn-entrar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--secondary);
+      clip-path: circle(0% at 50% 50%);
+      transition: clip-path 0.7s ease-in-out;
+      z-index: -1;
+    }
+
+    .btn-entrar:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(42, 91, 127, 0.4);
+    }
+
+    .btn-entrar:hover::before {
+      clip-path: circle(100% at 50% 50%);
+    }
+
+    .btn-entrar:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .btn-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s ease;
+    }
+
+    .btn-entrar:hover .btn-content {
+      animation: pulse 1s infinite alternate;
+    }
+
+    .icon {
+      transition: transform 0.3s ease;
+    }
+
+    .btn-entrar:hover .icon {
+      transform: translateX(5px);
+      animation: swing 0.8s infinite alternate;
+    }
+
+    .btn-entrar::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0) 60%
+      );
+      transform: rotate(30deg);
+      transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+      z-index: 2;
+    }
+
+    .btn-entrar:hover::after {
+      left: 100%;
+      top: 100%;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+
+    @keyframes swing {
+      0% { transform: rotate(-10deg) translateX(5px); }
+      100% { transform: rotate(10deg) translateX(5px); }
+    }
+
+    @keyframes clickEffect {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .footer-info {
+      margin-top: 15px;
+      font-size: 0.75rem;
+      color: var(--secondary);
+      line-height: 1.4;
+    }
+
+    .footer-info strong {
+      font-weight: 700;
+    }
+
+    .wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      z-index: 0;
+    }
+
+    .wave svg {
+      position: relative;
+      display: block;
+      width: calc(100% + 1.3px);
+      height: 150px;
+    }
+
+    .wave .shape-fill {
+      fill: rgba(42, 91, 127, 0.05);
+    }
+
+    @media (max-width: 992px) {
+      body {
+        flex-direction: column;
+      }
+
+      .left-panel, .right-panel {
+        padding: 40px 20px;
+      }
+
+      .left-panel {
+        text-align: center;
+      }
+
+      .barra-links-container {
+        justify-content: center;
+      }
+
+      .logo-container {
+        justify-content: center;
+      }
+
+      .features {
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .auth-container {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .left-panel {
+        padding: 30px 15px;
+      }
+
+      .lista-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .link-barra {
+        font-size: 0.85rem;
+      }
+
+      .espacador {
+        margin: 0 8px;
+      }
+
+      .logo-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .logo-icon {
+        margin-bottom: 0px;
+      }
+
+      .auth-container {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Logos do SUS decorativas -->
+  <div class="sus-logos">
+    <div class="sus-logo"></div>
+    <div class="sus-logo"></div>
+    <div class="sus-logo"></div>
+    <div class="sus-logo"></div>
+    <div class="sus-logo"></div>
+    <div class="sus-logo"></div>
+    <div class="sus-logo"></div>
+    <div class="sus-logo"></div>
+  </div>
+
+  <!-- Painel esquerdo -->
+  <div class="left-panel">
+    <div class="barra-links-container">
+      <ul class="lista-links">
+        <li class="link-item">
+          <a href="https://drive.google.com/drive/folders/1G6o9RqYXCQ-2tZ09NvY1FPIaOprErs5N?usp=sharing" target="_blank" class="link-barra" aria-label="Acessar Manual">Manual</a>
+        </li>
+      </ul>
+    </div>
+    <div class="logo-container">
+      <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="Logo Sistema de Estratificação de Risco Gestacional" class="logo-icon">
+      <div class="logo-text">
+        <h1>Sistema de Estratificação de Risco Gestacional</h1>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">
+          <i class="fas fa-bolt"></i>
+        </div>
+        <div class="feature-text">
+          <h3>Avaliação Rápida</h3>
+          <p>Identificação imediata do nível de risco gestacional</p>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="feature-text">
+          <h3>Dados em Tempo Real</h3>
+          <p>Monitoramento contínuo dos dados</p>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">
+          <i class="fas fa-user-shield"></i>
+        </div>
+        <div class="feature-text">
+          <h3>Segurança Garantida</h3>
+          <p>Proteção dos dados sensíveis dos pacientes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Painel direito -->
+  <div class="right-panel">
+    <div class="auth-container">
+      <!-- Formulário de Login -->
+      <div id="login-form" class="fade-in">
+        <div class="auth-header">
+          <h2>
+            <i class="fas fa-sign-in-alt"></i>
+            Acesse o sistema
+          </h2>
+          <p>Informe seu nome para acessar o sistema</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div style="padding: 12px; background-color: var(--light); border-radius: 10px; margin-bottom: 20px; color: var(--primary); border-left: 4px solid var(--secondary);">
+                <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}" id="loginForm">
+          <div class="form-group">
+            <label for="profissional">Nome do Profissional</label>
+            <input type="text" id="profissional" name="profissional" class="form-control" placeholder="João da Silva" required oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')">
+          </div>
+
+          <div class="btn-container">
+            <button type="submit" class="btn-entrar" id="entrarBtn">
+              <div class="btn-content">
+                <span class="icon"><i class="fas fa-sign-in-alt"></i></span>
+                <span>Entrar</span>
+              </div>
+              <div class="particles" id="particles"></div>
+            </button>
+          </div>
+        </form>
+
+        <div class="auth-footer">
+          <div class="footer-info">
+            Sistema fornecido pelo <strong>Município de Itaquitinga</strong><br>Versão 1.0.0
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function createParticles(particlesContainer) {
+      for (let i = 0; i < 5; i++) {
+        const particle = document.createElement('div');
+        particle.style.position = 'absolute';
+        particle.style.width = '5px';
+        particle.style.height = '5px';
+        particle.style.background = 'rgba(230, 240, 250, 0.5)';
+        particle.style.borderRadius = '50%';
+        particle.style.left = '50%';
+        particle.style.top = '50%';
+        particle.style.animation = 'float 1.5s ease-out forwards';
+
+        const angle = Math.random() * 360;
+        const distance = Math.random() * 20 + 10;
+        const style = document.createElement('style');
+        style.innerHTML = `
+          @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            100% { transform: translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) rotate(${Math.random() * 360}deg); opacity: 0; }
+          }
+        `;
+        document.head.appendChild(style);
+        particlesContainer.appendChild(particle);
+        setTimeout(() => {
+          particle.remove();
+          style.remove();
+        }, 1500);
+      }
+    }
+
+    const btn = document.getElementById('entrarBtn');
+    const particlesContainer = document.getElementById('particles');
+    if (btn && particlesContainer) {
+      btn.addEventListener('mouseenter', () => createParticles(particlesContainer));
+      btn.addEventListener('click', (e) => {
+        const clickEffect = document.createElement('div');
+        clickEffect.style.position = 'absolute';
+        clickEffect.style.width = '20px';
+        clickEffect.style.height = '20px';
+        clickEffect.style.background = 'rgba(230, 240, 250, 0.7)';
+        clickEffect.style.borderRadius = '50%';
+        clickEffect.style.pointerEvents = 'none';
+        clickEffect.style.left = `${e.offsetX - 10}px`;
+        clickEffect.style.top = `${e.offsetY - 10}px`;
+        clickEffect.style.animation = 'clickEffect 0.5s ease-out forwards';
+        btn.appendChild(clickEffect);
+        setTimeout(() => clickEffect.remove(), 500);
+
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fas fa-check"></i> Acessando...`;
+        btn.style.pointerEvents = 'none';
+        setTimeout(() => btn.form.submit(), 500);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('login-form').classList.add('fade-in');
+    });
+
+    document.querySelectorAll('.link-item').forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        document.querySelectorAll('.link-item').forEach(sibling => {
+          if (sibling !== item) {
+            sibling.querySelector('.link-barra').style.opacity = '0.5';
+            sibling.querySelector('.link-barra').style.color = 'var(--secondary)';
+          }
+        });
+      });
+
+      item.addEventListener('mouseleave', () => {
+        document.querySelectorAll('.link-item').forEach(sibling => {
+          sibling.querySelector('.link-barra').style.opacity = '1';
+          sibling.querySelector('.link-barra').style.color = 'var(--primary)';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
