@@ -552,7 +552,7 @@
           <input type="text" name="cpf" required placeholder="999.999.999-99" maxlength="14" oninput="mascaraCPF(this)" onblur="validarCPF(this)">
 
           <label class="required">Telefone</label>
-          <input type="text" name="telefone" required placeholder="(XX) 9 XXXX-XXXX" maxlength="16" oninput="mascaraTelefone(this)" onblur="validarTelefone(this)">
+          <input type="text" name="telefone" required placeholder="(81) 9 9999-9999" maxlength="16" oninput="mascaraTelefone(this)" onblur="validarTelefone(this)">
 
           <label class="required">Município</label>
           <select name="municipio" id="municipio" required>
@@ -1061,16 +1061,16 @@
     }
 
     // Valida se o telefone é válido ((81) 9 9999-9999)
-function validarTelefone(input) {
-    const value = input.value;
-    const regex = /^\(\d{2}\) 9 \d{4}-\d{4}$/;
-    if (!regex.test(value)) {
+    function validarTelefone(input) {
+      const value = input.value;
+      const regex = /^\(81\) 9 \d{4}-\d{4}$/;
+      if (!regex.test(value)) {
         input.value = '';
-        showErrorModal('Telefone inválido. Use o formato (XX) 9 XXXX-XXXX, onde XX é o DDD.');
+        showErrorModal('Telefone inválido. Use o formato (81) 9 9999-9999.');
         return false;
+      }
+      return true;
     }
-    return true;
-}
 
     // Valida se o CPF é válido (formato 999.999.999-99)
     function validarCPF(input) {
@@ -1097,18 +1097,20 @@ function validarTelefone(input) {
     }
 
     // Aplica máscara ao campo de telefone (apenas números)
-function mascaraTelefone(input) {
-    let value = input.value.replace(/\D/g, '');
-    if (value.length > 11) value = value.slice(0, 11);
-    if (value.length > 7) {
-        value = `(${value.slice(0, 2)}) 9 ${value.slice(2, 6)}-${value.slice(6)}`;
-    } else if (value.length > 2) {
-        value = `(${value.slice(0, 2)}) 9 ${value.slice(2)}`;
-    } else if (value.length > 0) {
-        value = `(${value.slice(0, 2)}`;
+    function mascaraTelefone(input) {
+      let value = input.value.replace(/\D/g, '');
+      if (value.length > 11) value = value.slice(0, 11);
+      if (value.length > 7) {
+        value = `(81) 9 ${value.slice(3, 7)}-${value.slice(7)}`;
+      } else if (value.length > 3) {
+        value = `(81) 9 ${value.slice(3)}`;
+      } else if (value.length > 2) {
+        value = `(81) ${value.slice(2)}`;
+      } else if (value.length > 0) {
+        value = `(${value}`;
+      }
+      input.value = value;
     }
-    input.value = value;
-}
 
     // Aplica máscara ao campo de CPF (apenas números)
     function mascaraCPF(input) {
